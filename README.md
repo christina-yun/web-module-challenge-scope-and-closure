@@ -59,6 +59,9 @@ You will be running your tests in one terminal and debugging in the other. As yo
 Edit the `ReadMe` file with your answers to the questions below.
 
 1. In your own words, define closure (1-2 sentences).
+
+  A: A closure is anytime when a child function reaches into a parent function (or higher) scope to utilize a variable and/or value.
+
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -80,8 +83,16 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+
+  A: Closure is used when the anonymous function is pulling the "name" from the parameter of its parent function 'personalDice' and using it for its console.log.
+
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+
+  A: The name of Dan will always be the same and will always show the value of Dan for name. What will be different each time is the value of newRoll as that is determined by the newRoll function, which by definition will spit out a random number between 1-6 each time.
+
 c. What is the lexical scope of `newRoll`? 
+
+  A: newRoll is only available and its scope is limited to the anonymous function. Its value cannot be gotten from within the personalDice function or outside of that.
 
 
 ### Task 3 - Stretch Goals
