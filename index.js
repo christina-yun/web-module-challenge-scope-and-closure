@@ -16,7 +16,7 @@
 function processFirstItem(stringList, callback) {
   return callback(stringList[0])
 }
-console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
+console.log('Example task',processFirstItem(['foo','bar'],function(str){return str+str}));
 
 // ⭐️ Example Challenge END ⭐️
 
@@ -28,11 +28,17 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
+
+    A: The difference is that for counter1, count is declared as a local variable inside the counterMaker function whereas counter2 has count declared as a global variable.
   
   2. Which of the two uses a closure? How can you tell?
+
+    A: counter1 uses a closure. You know this because it references the variable count which was declared in the parent function. It has to reach into counterMaker in order to make use of count, which is a closure.
   
-  3. In what scenario would the counter1 code be preferable? In what scenario would 
-     counter2 be better?  
+  3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better?  
+
+    A: In most scenarios you would want to use counter1 as count would only exist within the confines of that function scope. counter2 might be preferable if there are multiple avenues for adding to the value of that count. E.g. if you are playing a video game and there are multiple ways of gathering experience, you would want to have one central variable that is dynamically updating anytime those functions end up being invoked.
+
 */
 
 // counter1 code
@@ -44,14 +50,24 @@ function counterMaker() {
 }
 
 const counter1 = counterMaker();
+// console.log('Testing counter1', counter1());
+// console.log('Testing counter1', counter1());
+// console.log('Testing counter1', counter1());
+// console.log('Testing counter1', counter1());
 
 // counter2 code
 let count = 0;
 
 function counter2() {
   return count++;
+  // tried: count = count +1 (returns 1), tried ++count (also returns 1), why isn't this returning 1. Increment doesn't start until second invocation?
 }
-
+console.log('Testing counter2', counter2(),"shouldn't this return 1?" );
+console.log('Testing counter2', count);
+console.log('Testing counter2', counter2());
+console.log('Testing counter2', counter2());
+console.log('counter2', count);
+console.log('counter2', count);
 
 /* ⚾️⚾️⚾️ Task 2: inning() ⚾️⚾️⚾️
 Use the inning function below to do the following:
@@ -62,10 +78,10 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+    return Math.floor(Math.random() * 3);
 }
-
+console.log('Task 2: ', inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -81,19 +97,38 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+function finalScore(inningcb, num){
+  function finalInning (Home, Away){
+    return {Home, Away};
+  }
+
+  let homeScore = 0;
+  let awayScore = 0;
+  
+  for (let i = 0; i < num; i++){
+    homeScore = inningcb() + homeScore;
+    awayScore = inningcb() + awayScore;
+
+  }
+  return finalInning(homeScore, awayScore);
 }
+
+console.log('Task 3: ', finalScore(inning, 9));
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inningcb) {
+  function gameObject(Home, Away){
+    return {Home, Away};
+  }
+
+  return gameObject(inningcb(), inningcb());
 }
 
+console.log('Task 4: ', getInningScore(inning));
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
