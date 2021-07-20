@@ -174,18 +174,24 @@ function scoreboard(getInningScoreCB, inningCB, numOfInnings) {
   const gameArray = [];
   let homeScore = 0;
   let awayScore = 0;
+  let totalHomeScore = homeScore;
+  let totalAwayScore = awayScore;
 
   for (let i = 1; i <= numOfInnings; i++){    
-    homeScore = homeScore + inningCB();
-    awayScore = awayScore + inningCB();
+
+    homeScore = getInningScoreCB(inningCB).Home;
+    awayScore = getInningScoreCB(inningCB).Away;
 
     gameArray.push(`Inning ${i}: Away: ${awayScore} - Home: ${homeScore}`)
+
+    totalHomeScore = totalHomeScore + homeScore;
+    totalAwayScore = totalAwayScore + awayScore; 
   }
 
-  if (homeScore === awayScore){
-    gameArray.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`)
+  if (totalHomeScore === totalAwayScore){
+    gameArray.push(`This game will require extra innings: Away ${totalAwayScore} - Home ${totalHomeScore}`)
   } else {
-    gameArray.push(`Final Score: Away ${awayScore} - Home ${homeScore}`)
+    gameArray.push(`Final Score: Away ${totalAwayScore} - Home ${totalHomeScore}`)
   }
   
   return gameArray;
